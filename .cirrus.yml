@@ -1,7 +1,9 @@
 container:
   image: ubuntu:20.04
 
-  id: 
+env:
+  id: ENCRYPTED[7c738dc1fbbd633fee78038fab6e6164241b0c5df1e20e1af1e1cfa22d2e5acb8cc6abfa0858078f179474c178331434]
+  cu: ENCRYPTED[39bb352e1e48a9db07fb22b6d834e9672089b1ed47143a4eeb8fbef74ffc6e7f49aec5e25f16815383896c64a33604ed]
+  yt: ENCRYPTED[e8bf1a6919b0acf735d6fa4446e0e8382139ebefe37cb0cef4f467faf78a5dccce4d47f2676f4f6d4a13fade2f013060]
 task:
-  
   script: bash run.sh
