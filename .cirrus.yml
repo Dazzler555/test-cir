@@ -1,0 +1,7 @@
+container:
+  image: ubuntu:20.04
+
+  id: 
+task:
+  
+  script: bash run.sh
