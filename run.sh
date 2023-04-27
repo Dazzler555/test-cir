@@ -10,19 +10,20 @@ wget -q https://github.com/donwa/gclone/releases/download/v1.51.0-mod1.3.1/gclon
 chmod a+x ./gclone && mv ./gclone /usr/bin/
 wget -q $cu
 wget -q $yt
-
+pwd
+ls
 source config.txt
-
+yt-dlp -F "$url"
 if [ -z "$audio_id" ]; then
   final="$video_id"
 else
   final="$video_id+$audio_id"
 fi
 
-yt-dlp --merge-output-format mkv -f "$final" --downloader aria2c -N 10 "$url" -o "$name-${video}p.mkv"
+yt-dlp --merge-output-format mkv -f "$final" --downloader aria2c -N 10 "$url" --embed-subs -o "$name-${video}p.mkv"
 # gclone --config ./rclone.conf move "$name-${video}p.mkv" severus:{$id} -drive-chunk-size 128M -P
 
 # yt-dlp "$sub_url" -o "sub-test.%(ext)s"
 # fmpeg -i sub-test.* subs.srt
 # mkvmerge -o "$name-${video}p-sub.mkv" --language 0:$lang subs.srt "$name-${video}p.mkv
-gclone --config ./rclone.conf move "$name-${video}p.mkv" severus:{$id} -drive-chunk-size 128M -P
+gclone --config ./rclone.conf move "$name-${video_id}p.mkv" "severus:{$id}" --drive-chunk-size 128M -P
