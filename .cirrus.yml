@@ -1,5 +1,5 @@
 container:
-  image: ubuntu:20.04
+  image: dazz111/yfd:latest
 
 env:
   id: ENCRYPTED[7c738dc1fbbd633fee78038fab6e6164241b0c5df1e20e1af1e1cfa22d2e5acb8cc6abfa0858078f179474c178331434]
