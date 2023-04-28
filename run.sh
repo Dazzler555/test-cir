@@ -68,7 +68,7 @@ if [[ "$output_name" == "$name-${video_res}p.mkv" ]]; then
   final_output_name="$output_name"
 elif [[ "$output_name" == "$name-${video_id}.mkv" || "$output_name" == "$name.mkv" ]]; then
   vid_ht=$(mediainfo --Inform="Video;%Height%" "$output_name")
-  final_output_name="$name-${vid_ht}.mkv"
+  final_output_name="$name-${vid_ht}p.mkv"
 fi
 
 # Rename output file if necessary
