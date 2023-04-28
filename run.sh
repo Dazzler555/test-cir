@@ -59,10 +59,27 @@ fi
 yt-dlp --merge-output-format mkv -f "$final" --downloader aria2c -N 10 --embed-subs -o "$output_name" "$url" 
 # gclone --config ./rclone.conf move "$name-${video}p.mkv" severus:{$id} -drive-chunk-size 128M -P
 
-# yt-dlp "$sub_url" -o "sub-test.%(ext)s"
-# fmpeg -i sub-test.* subs.srt
-# mkvmerge -o "$name-${video}p-sub.mkv" --language 0:$lang subs.srt "$name-${video}p.mkv
+#yt-dlp "$sub_url" -o "sub-test.%(ext)s"
+#ffmpeg -i sub-test.* subs.srt
+#ext=".mkv"
+#mkv_filename=$(basename "$output_name" "$ext")
+#sb="-sub"
+#sub_mkv="$mkv_filename+$sb+$ext"
+#mkvmerge -o "$sub_mkv" --language 0:$sub_lang subs.srt "$output_name"
+#rm "$output_name"
+#mv "$sub_mkv" "$output_name"
 
+if [ -n "$sub_url" ]; then
+  yt-dlp "$sub_url" -o "sub-test.%(ext)s"
+  ffmpeg -i sub-test.* subs.srt
+  ext=".mkv"
+  mkv_filename=$(basename "$output_name" "$ext")
+  sb="-sub"
+  sub_mkv="$mkv_filename+$sb+$ext"
+  mkvmerge -o "$sub_mkv" --language 0:$sub_lang subs.srt "$output_name"
+  rm "$output_name"
+  mv "$sub_mkv" "$output_name"
+fi
 
 if [[ "$output_name" == "$name-${video_res}p.mkv" ]]; then
   final_output_name="$output_name"
