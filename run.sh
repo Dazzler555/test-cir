@@ -64,6 +64,10 @@ if [ -n "$sub_url" ]; then
   mv "$sub_mkv" "$output_name"
 fi
 
+ls
+
+
+
 if [[ "$output_name" == "$name-${video_res}p.mkv" ]]; then
   final_output_name="$output_name"
 elif [[ "$output_name" == "$name-${video_id}.mkv" || "$output_name" == "$name.mkv" ]]; then
