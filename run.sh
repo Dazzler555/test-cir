@@ -71,14 +71,17 @@ ls
 if [[ "$output_name" == "$name-${video_res}p.mkv" ]]; then
   final_output_name="$output_name"
 elif [[ "$output_name" == "$name-${video_id}.mkv" || "$output_name" == "$name.mkv" ]]; then
-  vid_ht=$(mediainfo --Inform="Video;%Height%" *.mkv)
+  vid_ht=$(mediainfo --Inform="Video;%Height%" "$(ls -S | head -n 1)")
   final_output_name="$name-${vid_ht}p.mkv"
 fi
+
+echo "video height: $vid_ht"
 
 # Rename output file if necessary
 if [[ "$final_output_name" != "$output_name" ]]; then
   mv "$output_name" "$final_output_name"
 fi
-
+echo "2nd ls"
+ls
 
 gclone --config ./rclone.conf move "$final_output_name" "severus:{$id}" --drive-chunk-size 128M -P --stats-one-line
