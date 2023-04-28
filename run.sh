@@ -38,10 +38,10 @@ echo "$final"
 
 
 # Derive output_name variable
-if [[ -n "$video_res" && -n "$video_id" ]]; then
+if [[ -n "$video_res" && -n "$video_id" || -n "$video_res" && -z "$video_id" ]]; then
   output_name="$name-${video_res}p.mkv"
 elif [[ -z "$video_res" && -n "$video_id" ]]; then
-  output_name="$name-${video_id}.mkv"
+  output_name="$name-${video_id}p.mkv"
 else
   output_name="$name.mkv"
 fi
