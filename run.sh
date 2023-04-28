@@ -15,9 +15,9 @@ curl -L -H "Accept: application/vnd.github+json"   -H "Authorization: Bearer $gt
 source config.txt
 yt-dlp -F "$url"
 if [ -n "$video_res" ] && [ -n "$audio_id" ]; then
-  final="bestvideo[height<=$video]+$audio_id"
+  final="bestvideo[height<=$video_res]+$audio_id"
 elif [ -n "$video_res" ]; then
-  final="bestvideo[height<=$video]"
+  final="bestvideo[height<=$video_res]"
 elif [ -n "$video_id" ]; then
   if [ -n "$audio_id" ]; then
     final="$video_id+$audio_id"
