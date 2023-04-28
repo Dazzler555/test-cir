@@ -47,7 +47,7 @@ else
 fi
 
 # Generate output file
-mpx -q --merge-output-format mkv -f "$final" --downloader aria2c -N 10 --embed-subs -o "$output_name" "$url" 
+mpx -q --convert-subs srt --merge-output-format mkv -f "$final" --downloader aria2c -N 10 --embed-subs -o "$output_name" "$url"
 # gclone --config ./rclone.conf move "$name-${video}p.mkv" severus:{$id} -drive-chunk-size 128M -P
 
 
