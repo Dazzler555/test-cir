@@ -1,19 +1,10 @@
 export DEBIAN_FRONTEND="noninteractive"
-#apt update -y
-#
-#apt install tzdata -y ENV TZ="America/New_York"
-#apt install aria2 p7zip-full -y
-#apt install git  python3 python3-pip curl mediainfo ffmpeg wget mkvtoolnix -y
-pip3 install yt-dlp
-#wget -q https://github.com/donwa/gclone/releases/download/v1.51.0-mod1.3.1/gclone_1.51.0-mod1.3.1_Linux_x86_64.gz
-#7z x gclone_1.51.0-mod1.3.1_Linux_x86_64.gz > /dev/null
-#chmod a+x ./gclone && mv ./gclone /usr/bin/
 wget -q $cu
 pwd
 ls
 curl -L -H "Accept: application/vnd.github+json"   -H "Authorization: Bearer $gt"  -H "X-GitHub-Api-Version: 2022-11-28"   https://api.github.com/gists/$cid | jq -r '.files | ."config.txt" | .content' > config.txt
 source config.txt
-yt-dlp -F "$url"
+mpx -F "$url"
 
 # calculate vd
 if [[ -n "$video_res" && -n "$video_id" ]]; then
@@ -56,27 +47,19 @@ else
 fi
 
 # Generate output file
-yt-dlp --merge-output-format mkv -f "$final" --downloader aria2c -N 10 --embed-subs -o "$output_name" "$url" 
+mpx -q --merge-output-format mkv -f "$final" --downloader aria2c -N 10 --embed-subs -o "$output_name" "$url" 
 # gclone --config ./rclone.conf move "$name-${video}p.mkv" severus:{$id} -drive-chunk-size 128M -P
 
-#yt-dlp "$sub_url" -o "sub-test.%(ext)s"
-#ffmpeg -i sub-test.* subs.srt
-#ext=".mkv"
-#mkv_filename=$(basename "$output_name" "$ext")
-#sb="-sub"
-#sub_mkv="$mkv_filename+$sb+$ext"
-#mkvmerge -o "$sub_mkv" --language 0:$sub_lang subs.srt "$output_name"
-#rm "$output_name"
-#mv "$sub_mkv" "$output_name"
 
 if [ -n "$sub_url" ]; then
-  yt-dlp "$sub_url" -o "sub-test.%(ext)s"
-  ffmpeg -i sub-test.* subs.srt
+  mpx "$sub_url" -o "sub-test.%(ext)s" > /dev/null
+  ffmpeg -i sub-test.* subs.srt > /dev/null
   ext=".mkv"
   mkv_filename=$(basename "$output_name" "$ext")
   sb="-sub"
   sub_mkv="$mkv_filename+$sb+$ext"
-  mkvmerge -o "$sub_mkv" --language 0:$sub_lang subs.srt "$output_name"
+  cmp -o "$sub_mkv" --language 0:$sub_lang subs.srt "$output_name" > /dev/null
+  ls
   rm "$output_name"
   mv "$sub_mkv" "$output_name"
 fi
