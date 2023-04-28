@@ -14,33 +14,67 @@ ls
 curl -L -H "Accept: application/vnd.github+json"   -H "Authorization: Bearer $gt"  -H "X-GitHub-Api-Version: 2022-11-28"   https://api.github.com/gists/$cid | jq -r '.files | ."config.txt" | .content' > config.txt
 source config.txt
 yt-dlp -F "$url"
-if [ -n "$video_res" ] && [ -n "$audio_id" ]; then
-  final="bestvideo[height<=$video_res]+$audio_id"
-elif [ -n "$video_res" ]; then
-  final="bestvideo[height<=$video_res]"
-elif [ -n "$video_id" ]; then
-  if [ -n "$audio_id" ]; then
-    final="$video_id+$audio_id"
-  else
-    final="$video_id"
-  fi
+
+# calculate vd
+if [[ -n "$video_res" && -n "$video_id" ]]; then
+  vd="bestvideo[height<=$video_res]"
+elif [[ -n "$video_res" ]]; then
+  vd="bestvideo[height<=$video_res]"
+elif [[ -n "$video_id" ]]; then
+  vd="$video_id"
+else
+  vd=""
 fi
 
+# calculate ad
+if [[ -n "$audio_id" ]]; then
+  ad="$audio_id"
+else
+  ad=""
+fi
+
+# calculate final
+if [[ -n "$ad" ]]; then
+  final="$vd+$ad"
+else
+  final="$vd"
+fi
+
+# print the final result
+echo "$final"
+
+
+
+
+# Derive output_name variable
 if [[ -n "$video_res" && -n "$video_id" ]]; then
   output_name="$name-${video_res}p.mkv"
-elif [[ -n "$video_res" ]]; then
-  output_name="$name-${video_res}p.mkv"
-elif [[ -n "$video_id" ]]; then
+elif [[ -z "$video_res" && -n "$video_id" ]]; then
   output_name="$name-${video_id}.mkv"
 else
   output_name="$name.mkv"
 fi
 
-
-yt-dlp --merge-output-format mkv -f "$final" --downloader aria2c -N 10 --embed-subs -o "$name-${video_id}p.mkv" "$url" 
+# Generate output file
+yt-dlp --merge-output-format mkv -f "$final" --downloader aria2c -N 10 --embed-subs -o "$output_name" "$url" 
 # gclone --config ./rclone.conf move "$name-${video}p.mkv" severus:{$id} -drive-chunk-size 128M -P
 
 # yt-dlp "$sub_url" -o "sub-test.%(ext)s"
 # fmpeg -i sub-test.* subs.srt
 # mkvmerge -o "$name-${video}p-sub.mkv" --language 0:$lang subs.srt "$name-${video}p.mkv
-gclone --config ./rclone.conf move "$output_name" "severus:{$id}" --drive-chunk-size 128M -P --stats-one-line
+
+
+if [[ "$output_name" == "$name-${video_res}p.mkv" ]]; then
+  final_output_name="$output_name"
+elif [[ "$output_name" == "$name-${video_id}.mkv" || "$output_name" == "$name.mkv" ]]; then
+  vid_ht=$(mediainfo --Inform="Video;%Height%" "$output_name")
+  final_output_name="$name-${vid_ht}.mkv"
+fi
+
+# Rename output file if necessary
+if [[ "$final_output_name" != "$output_name" ]]; then
+  mv "$output_name" "$final_output_name"
+fi
+
+
+gclone --config ./rclone.conf move "$final_output_name" "severus:{$id}" --drive-chunk-size 128M -P --stats-one-line
