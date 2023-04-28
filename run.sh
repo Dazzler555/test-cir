@@ -17,7 +17,7 @@ else
   vd=""
 fi
 
-# calculate ad
+# calculates ad
 if [[ -n "$audio_id" ]]; then
   ad="$audio_id"
 else
