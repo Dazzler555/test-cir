@@ -85,7 +85,7 @@ ls
 if [[ "${output_name}" == "${name}-${video_res}p.mkv" ]]; then
   final_output_name="${output_name}"
 elif [[ "${output_name}" == "${name}-${video_id}.mkv" || "${output_name}" == "${name.mkv}" ]]; then
-  vid_ht=$(find . -maxdepth 1 -type f -name "*.mkv" -printf "%s %p\n" | sort -rn | head -n 1 | cut -d' ' -f1 | xargs mediainfo --Inform="Video;%Height%")
+  vid_ht=$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 "${output_name}" | awk -F 'x' '{print $2}')
   final_output_name="${name}-${vid_ht}p.mkv"
 fi
 
