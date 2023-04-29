@@ -5,7 +5,8 @@ ls
 curl -L -H "Accept: application/vnd.github+json"   -H "Authorization: Bearer $gt"  -H "X-GitHub-Api-Version: 2022-11-28"   https://api.github.com/gists/$cid | jq -r '.files | ."config.txt" | .content' > config.txt
 source config.txt
 mpx -F "$url"
-
+string="${name}"
+if echo "$string" | grep -qP "[^\x00-\x7F]"; then name=$(echo "${string}" | iconv -f utf-8 -t ascii//TRANSLIT); else name="${name}"; fi
 # calculate vd
 if [[ -n "$video_res" && -n "$video_id" ]]; then
   vd="bestvideo[height<=$video_res]"
