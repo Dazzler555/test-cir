@@ -11,7 +11,8 @@ elif [ -n "${url}" ]; then
    mpx -F "${url}"
 fi
 string="${name}"
-if echo "$string" | grep -qP "[^\x00-\x7F]"; then name=$(echo "${string}" | iconv -f utf-8 -t ascii//TRANSLIT); else name="${name}"; fi
+if echo "$string" | grep -qP "[^\x00-\x7F]"; then name=$(python -c "import unicodedata; print(''.join(c if ord(c) < 128 else unicodedata.normalize('NFKD', c).encode('ASCII', 'ignore').decode() for c in '$string'))"); else name="${name}"; fi
+
 # calculate vd
 if [[ -n "${video_res}" && -n "${video_id}" ]]; then
   vd="bestvideo[height<=${video_res}]"
