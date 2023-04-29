@@ -97,9 +97,9 @@ fi
 echo "video height: ${vid_ht}"
 
 # Rename output file if necessary
-#if [[ "${final_output_name}" != "${output_name}" ]]; then
-#  mv "${output_name}" "${final_output_name}"
-#fi
+if [[ "${final_output_name}" != "${output_name}" ]]; then
+  mv "${output_name}" "${final_output_name}"
+fi
 echo "2nd ls"
 ls
 
