@@ -47,7 +47,14 @@ else
 fi
 echo "Starting....."
 # Generate output file
-mpx -q --convert-subs srt --merge-output-format mkv -f "$final" --downloader aria2c -N 10 --embed-subs -o "$output_name" "$url"
+# mpx -q --convert-subs srt --merge-output-format mkv -f "$final" --downloader aria2c -N 10 --embed-subs -o "$output_name" "$url"
+if [ -n "$url" ] && [ -n "$ref" ]; then
+    mpx -q --convert-subs srt --merge-output-format mkv --referer "$ref" -f "$final" --downloader aria2c -N 10 --embed-subs -o "$output_name" "$url"
+else
+    mpx -q --convert-subs srt --merge-output-format mkv -f "$final" --downloader aria2c -N 10 --embed-subs -o "$output_name" "$url"
+fi
+
+
 # gclone --config ./rclone.conf move "$name-${video}p.mkv" severus:{$id} -drive-chunk-size 128M -P
 echo "DL done"
 
