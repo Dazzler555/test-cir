@@ -57,9 +57,9 @@ echo "Starting....."
 # mpx -q --convert-subs srt --merge-output-format mkv -f "$final" --downloader aria2c -N 10 --embed-subs -o "$output_name" "$url"
 
 if [ -n "${url}" ] && [ -n "${ref}" ]; then
-    mpx -q --convert-subs srt --merge-output-format mkv -f "$final" --downloader aria2c -N 10 --embed-subs -o "${output_name}" "${url}" --referer "${ref}"
+    mpx -q --merge-output-format mkv -f "$final" --downloader aria2c -N 10 -o "${output_name}" "${url}" --referer "${ref}"
 elif [ -n "${url}" ]; then
-    mpx -q --convert-subs srt --merge-output-format mkv -f "${final}" --downloader aria2c -N 10 --embed-subs -o "${output_name}" "${url}"
+    mpx -q --merge-output-format mkv -f "${final}" --downloader aria2c -N 10  -o "${output_name}" "${url}"
 fi
 
 
@@ -77,6 +77,8 @@ if [ -n "${sub_url}" ]; then
   ls
   rm "${output_name}"
   mv "${sub_mkv}" "${output_name}"
+  rm sub-test.*
+  rm subs.srt
 fi
 
 ls
