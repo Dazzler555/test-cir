@@ -69,11 +69,13 @@ echo "DL done"
 if [ -n "${sub_url}" ]; then
   mpx "${sub_url}" -o "subs.%(ext)s" > /dev/null
 #  ffmpeg -i sub-test.* subs.srt > /dev/null
+  latest_file=$(find . -maxdepth 1 -type f -name "subs.*" -printf "%T@ %p\n" | sort -n | tail -n1 | cut -d" " -f2- | sed 's|^./||')
   ext="mkv"
   mkv_filename=$(basename "${output_name}" "${ext}")
   sb="-sub"
   sub_mkv="${mkv_filename}${sb}.${ext}"
-  cmp -o "$sub_mkv" --language 0:"${sub_lang}" subs.* "${output_name}" > /dev/null
+  echo "MKV SUB"
+  cmp -o "$sub_mkv" --language 0:"${sub_lang}" "$latest_file" "${output_name}" > /dev/null
   ls
   rm "${output_name}"
   mv "${sub_mkv}" "${output_name}"
