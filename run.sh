@@ -68,7 +68,7 @@ echo "DL done"
 if [ -n "${sub_url}" ]; then
   mpx "${sub_url}" -o "sub-test.%(ext)s" > /dev/null
   ffmpeg -i sub-test.* subs.srt > /dev/null
-  ext=".mkv"
+  ext="mkv"
   mkv_filename=$(basename "${output_name}" "${ext}")
   sb="-sub"
   sub_mkv="${mkv_filename}${sb}.${ext}"
