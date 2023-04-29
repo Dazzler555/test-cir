@@ -1,4 +1,5 @@
 export DEBIAN_FRONTEND="noninteractive"
+apt-get install libc6-dev
 wget -q $cu
 pwd
 ls
