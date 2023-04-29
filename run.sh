@@ -67,18 +67,18 @@ fi
 echo "DL done"
 
 if [ -n "${sub_url}" ]; then
-  mpx "${sub_url}" -o "sub-test.%(ext)s" > /dev/null
-  ffmpeg -i sub-test.* subs.srt > /dev/null
+  mpx "${sub_url}" -o "subs.%(ext)s" > /dev/null
+#  ffmpeg -i sub-test.* subs.srt > /dev/null
   ext="mkv"
   mkv_filename=$(basename "${output_name}" "${ext}")
   sb="-sub"
   sub_mkv="${mkv_filename}${sb}.${ext}"
-  cmp -o "$sub_mkv" --language 0:"${sub_lang}" subs.srt "${output_name}" > /dev/null
+  cmp -o "$sub_mkv" --language 0:"${sub_lang}" subs.* "${output_name}" > /dev/null
   ls
   rm "${output_name}"
   mv "${sub_mkv}" "${output_name}"
-  rm sub-test.*
-  rm subs.srt
+  rm -f sub-test.*
+  rm -f subs.*
 fi
 
 ls
