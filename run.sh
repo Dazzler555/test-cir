@@ -44,12 +44,12 @@ echo "${final}"
 
 
 # Derive output_name variable
-if [[ -n "$video_res" && -n "$video_id" || -n "$video_res" && -z "$video_id" ]]; then
-  output_name="$name-${video_res}p.mkv"
-elif [[ -z "$video_res" && -n "$video_id" ]]; then
-  output_name="$name-${video_id}.mkv"
+if [[ -n "${video_res}" && -n "${video_id}" || -n "${video_res}" && -z "${video_id}" ]]; then
+  output_name="${name}-${video_res}p.mkv"
+elif [[ -z "${video_res}" && -n "${video_id}" ]]; then
+  output_name="${name}-${video_id}.mkv"
 else
-  output_name="$name.mkv"
+  output_name="${name}.mkv"
 fi
 echo "Starting....."
 # Generate output file
@@ -65,7 +65,7 @@ fi
 # gclone --config ./rclone.conf move "$name-${video}p.mkv" severus:{$id} -drive-chunk-size 128M -P
 echo "DL done"
 
-if [ -n "${sub_url{" ]; then
+if [ -n "${sub_url}" ]; then
   mpx "${sub_url}" -o "sub-test.%(ext)s" > /dev/null
   ffmpeg -i sub-test.* subs.srt > /dev/null
   ext=".mkv"
