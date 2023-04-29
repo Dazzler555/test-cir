@@ -77,7 +77,7 @@ if [ -n "${sub_url}" ]; then
   echo "MKV SUB"
   cmp -o "$sub_mkv" --language 0:"${sub_lang}" "subs.srt" "${output_name}" > /dev/null
   ls
-  rm "${output_name}"
+#  rm "${output_name}"
   mv "${sub_mkv}" "${output_name}"
   rm -f sub-test.*
   rm -f subs.*
