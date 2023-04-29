@@ -10,9 +10,9 @@ if [ -n "${url}" ] && [ -n "${ref}" ]; then
 elif [ -n "${url}" ]; then
    mpx -F "${url}"
 fi
-string="${name}"
-if echo "$string" | grep -qP "[^\x00-\x7F]"; then name=$(python -c "import unicodedata; print(''.join(c if ord(c) < 128 else unicodedata.normalize('NFKD', c).encode('ASCII', 'ignore').decode() for c in '$string'))"); else name="${name}"; fi
 
+str=$(python3 uni.py "${name}")
+name="${str}"
 # calculate vd
 if [[ -n "${video_res}" && -n "${video_id}" ]]; then
   vd="bestvideo[height<=${video_res}]"
