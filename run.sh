@@ -68,8 +68,8 @@ echo "DL done"
 
 if [ -n "${sub_url}" ]; then
   mpx "${sub_url}" -o "sub-test.%(ext)s" > /dev/null
-  latest_file=$(find . -maxdepth 1 -type f -name "sub-test.*" -printf "%T@ %p\n" | sort -n | tail -n1 | cut -d" " -f2- | sed 's|^./||')
-  ffmpeg -hide_banner -i $(latest-file) subs.srt
+  sf=$(find . -maxdepth 1 -type f -name "sub-test.*" -printf "%T@ %p\n" | sort -n | tail -n1 | cut -d" " -f2- | sed 's|^./||')
+  ffmpeg -hide_banner -i "$sf" subs.srt
   ext="mkv"
   mkv_filename=$(basename "${output_name}" "${ext}")
   sb="-sub"
@@ -97,9 +97,9 @@ fi
 echo "video height: ${vid_ht}"
 
 # Rename output file if necessary
-if [[ "${final_output_name}" != "${output_name}" ]]; then
-  mv "${output_name}" "${final_output_name}"
-fi
+#if [[ "${final_output_name}" != "${output_name}" ]]; then
+#  mv "${output_name}" "${final_output_name}"
+#fi
 echo "2nd ls"
 ls
 
