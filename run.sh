@@ -104,3 +104,5 @@ echo "2nd ls"
 ls
 
 gclone --config ./rclone.conf move "${final_output_name}" "severus:{$id}" --drive-chunk-size 128M -P --stats-one-line
+
+export k="${final_output_name}"
