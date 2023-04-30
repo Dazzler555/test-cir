@@ -1,4 +1,5 @@
 n="Job Link"
+(cat minfo.txt && printf "\n\n---------------------------\n\n" && cat logger.txt) > new_logger.txt && rm logger.txt && mv new_logger.txt logger.txt
 text_file_name=$(cat log.txt | tail -1)
 tn=$(cat log.txt | head -1)
 mv logger.txt "$text_file_name"

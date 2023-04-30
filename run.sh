@@ -70,10 +70,10 @@ if [ -n "${sub_url}" ]; then
   mpx "${sub_url}" -o "sub-test.%(ext)s" > /dev/null
   sf=$(find . -maxdepth 1 -type f -name "sub-test.*" -printf "%T@ %p\n" | sort -n | tail -n1 | cut -d" " -f2- | sed 's|^./||')
   ffmpeg -hide_banner -i "$sf" subs.srt
-  ext="mkv"
+  ext=".mkv"
   mkv_filename=$(basename "${output_name}" "${ext}")
   sb="-sub"
-  sub_mkv="${mkv_filename}${sb}.${ext}"
+  sub_mkv="${mkv_filename}${sb}${ext}"
   echo "MKV SUB"
   cmp -o "$sub_mkv" --language 0:"${sub_lang}" "subs.srt" "${output_name}" > /dev/null
   ls
@@ -103,7 +103,13 @@ fi
 echo "2nd ls"
 ls
 
+
+# info=$(basename "${final_output_name}" .mkv)
+mediainfo "${final_output_name}" >> minfo.txt
+
 gclone --config ./rclone.conf move "${final_output_name}" "severus:{$id}" --drive-chunk-size 128M -P --stats-one-line
+
+
 
 if [[ $? -eq 0 ]]; then
   echo "${final_output_name}" > log.txt
