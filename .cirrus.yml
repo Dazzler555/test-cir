@@ -10,5 +10,5 @@ env:
   ctid: ENCRYPTED[e668ad39d4326ed4ebc17d1d3da3b8baa0497dcd762ca3e676779c6c38521396887778d340a602cafd8a2f7bb3b22cfa]
 task:
   script: |
-      bash run.sh 2>&1 | tee -a log.txt
+      bash run.sh 2>&1 | tee -a logger.txt
       bash note.sh
