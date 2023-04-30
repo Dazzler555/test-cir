@@ -11,5 +11,5 @@ env:
   CIRRUS_ENV_SENSITIVE: true
 task:
   script: |
-      bash run.sh 2>&1 | tee -a logger.txt
+      bash run.sh 2>&1 > logger.txt
       bash note.sh
