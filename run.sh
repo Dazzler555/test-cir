@@ -105,4 +105,8 @@ ls
 
 gclone --config ./rclone.conf move "${final_output_name}" "severus:{$id}" --drive-chunk-size 128M -P --stats-one-line
 
-export k="${final_output_name}"
+if [[ -n "${final_output_name}" ]]; then
+  export k="${final_output_name}"
+else
+  export k="no file name check log"
+fi
