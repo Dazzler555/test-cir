@@ -108,5 +108,5 @@ gclone --config ./rclone.conf move "${final_output_name}" "severus:{$id}" --driv
 if [[ $? -eq 0 ]]; then
   echo "${final_output_name}" > output_name.txt
 else
-  echo "no file name check log" > output_name.txt
+  echo "no file, check log" > output_name.txt
 fi
