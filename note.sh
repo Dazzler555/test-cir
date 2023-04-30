@@ -6,4 +6,4 @@ curl -s -X POST -H "Content-Type:multipart/form-data" -F "chat_id=${ctid}" -F "d
 File: ${tn}" \
    -F "disable_notification=true" -F "parse_mode=markdown" "https://api.telegram.org/bot${tt}/sendDocument" > /dev/null
 
-rm output_name.txt
+rm log.txt
