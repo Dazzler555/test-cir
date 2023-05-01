@@ -11,5 +11,5 @@ env:
   CIRRUS_ENV_SENSITIVE: true
 task:
   script: |
-      LC_ALL=C bash run.sh 2>&1 | tee -a logger.txt > /dev/null
+      LC_ALL=C bash run.sh 2>&1 | tee -a logger.txt # > /dev/null
       LC_ALL=C bash note.sh
