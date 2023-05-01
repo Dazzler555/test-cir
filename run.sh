@@ -1,5 +1,6 @@
 export DEBIAN_FRONTEND="noninteractive"
 # apt-get install libc6-dev
+pip install pycryptodomex
 wget -q "${cu}"
 pwd
 ls
